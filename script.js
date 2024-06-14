@@ -1,82 +1,49 @@
-let leapYear;
-
-
-let currentDate = new Date();
-
-let currentYear = currentDate.getFullYear();
-let currentMonth = currentDate.getMonth() + 1;
-let todayDate = currentDate.getDate();
-
-console.log(`Today is ${currentMonth}/${todayDate}/${currentYear}`);
-
-
-let productionTime = 2;
-let shippingTime = 3;
-let designTime = 5;
-
-if (currentYear % 400 === 0 || (currentYear % 4 === 0 && currentYear % 100 !== 0)) {
-        leapYear = true;
-}
-
-let daysInMonth;
-
-if (currentMonth === 1 || currentMonth === 3 || currentMonth === 5 ||
-    currentMonth === 7 || currentMonth === 8 || currentMonth === 10 ||
-     currentMonth === 12) {
-        daysInMonth = 31;
-     } else if (currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || 
-                currentMonth === 11) {
-                    daysInMonth = 30;
-                } else {
-                    if(leapYear === true) {
-                        daysInMonth = 29;
-                    } else {
-                        daysInMonth = 28;
-                    }
-                }
-
-let eta = todayDate + productionTime + shippingTime + designTime;
-
-function calculateInitialETA() {
-
-
-    if (eta > daysInMonth) {
-        eta -= daysInMonth;
-        currentMonth++;
+let businessProductionDays = 3;
+let businessDeliveryDays = 2;
+let bufferDays = 1;
+let designDays = 1;
+//need business prod and business shipping days
+//need functions to generate total prod and shipping days (accounting for weekends)
+class OrderTimes {
+    constructor(orderPlacedDate) {
+        this.orderDate = new Date(orderPlacedDate);
+        this.calculateEta();
     }
-    console.log(`Your current ETA is ${currentMonth}/${eta}/${currentYear}`);
+   
+    calculateEta() {
+        this.eta = new Date(this.orderDate.setDate(this.orderDate + businessProductionDays + designDays + businessDeliveryDays - bufferDays));
+        return this.eta;
+    }
 }
+
+
+// let etaModifier = orderDate.getDate() + businessProductionDays + businessDeliveryDays - bufferDays;
+// let shipByModifier = orderDate.getDate() + businessProductionDays - bufferDays;
+
+// eta.setDate(etaModifier);
+// shipByDate.setDate(shipByModifier);
+
+// const daysArray = [];
+
+
+// for (let i = orderDate.getDate(); i <= shipByDate.getDate(); i++) {
+//     let newDate = new Date(orderDate);
+//     newDate.setDate(i);
+//     let day = newDate.getDay();
+//     daysArray.push(day);
+//   }
+ 
+//   if (daysArray.includes(6) || daysArray.includes(0)) {
+//     etaModifier += 2;
+//     eta.setDate(etaModifier);
+//   }
   
-calculateInitialETA();
+
+let order = new OrderTimes(2024, 6, 15);
+
+console.log(order.orderDate);
 
 
-
-
-
-
-  let userInput = prompt("How many days did it take to get design approval?");
-
-
-
-
-//console.log(userInput);
-function calculateApprovalEta() {
-    let designTimeCredit;
-    let designTimeDebt;
-    let newEta;
-
-    if (userInput <= designTime) {
-        designTimeCredit = designTime -= userInput;
-        newEta = eta -= designTimeCredit;
-        
-        if (newEta <= 0) {
-           currentMonth--;
-           newEta = daysInMonth - newEta;
-        }
-
-        console.log(`Your new ETA is ${currentMonth}/${newEta}/${currentYear}`);
-    }
-}
-
-
-calculateApprovalEta();
+// console.log(daysArray);
+// console.log(etaModifier, shipByModifier);
+// console.log(`The order was placed on ${orderDate.toDateString()}. \nThe ETA is ${eta.toDateString()}. \nThis order should be shipped by ${shipByDate.toDateString()}.`);
