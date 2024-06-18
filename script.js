@@ -1,49 +1,141 @@
-let businessProductionDays = 3;
-let businessDeliveryDays = 2;
+let businessProductionDaysInput;
+let businessShippingDaysInput;
+let businessDesignDaysInput;
+let dateTimeInput;
+
 let bufferDays = 1;
-let designDays = 1;
-//need business prod and business shipping days
-//need functions to generate total prod and shipping days (accounting for weekends)
-class OrderTimes {
-    constructor(orderPlacedDate) {
-        this.orderDate = new Date(orderPlacedDate);
-        this.calculateEta();
-    }
-   
-    calculateEta() {
-        this.eta = new Date(this.orderDate.setDate(this.orderDate + businessProductionDays + designDays + businessDeliveryDays - bufferDays));
-        return this.eta;
-    }
+let isApproved = false;
+
+let totalDesignDays;
+let totalProductionDays;
+let totalShippingDays;
+
+let shipByModifier;
+let etaModifier;
+
+let orderDate;
+let eta;
+let shipByDate;
+let approvalDate;
+
+function doesSpanCrossWeekend(earliestDate, latestDate) {
+  const daysArray = [];
+
+  for (let i = earliestDate.getDate() + 1; i <= latestDate.getDate(); i++) {
+    let newDate = new Date(earliestDate);
+    newDate.setDate(i);
+    let day = newDate.getDay();
+    daysArray.push(day);
+  }
+
+  console.log(daysArray);
+
+  if (daysArray.includes(6) || daysArray.includes(0)) {
+    return true;
+  }
+  return false;
 }
 
+function printDateTimeInput(n) {
+  console.log(n);
+}
 
-// let etaModifier = orderDate.getDate() + businessProductionDays + businessDeliveryDays - bufferDays;
-// let shipByModifier = orderDate.getDate() + businessProductionDays - bufferDays;
+function initializeOrderDate(date = new Date()) {
+  orderDate = new Date(date);
+  // console.log(`forderdate ${orderDate}`);
+  //   return orderDate;
+}
 
-// eta.setDate(etaModifier);
-// shipByDate.setDate(shipByModifier);
+function intializeShipByDate(dateObject) {
+  shipByDate = new Date(dateObject);
+}
 
-// const daysArray = [];
+function initializeEta(date) {
+  eta = new Date(date.setDate(date.getDate() + etaModifier));
+  return eta;
+}
 
+function recalculateEta(approvalDateObject, n) {}
 
-// for (let i = orderDate.getDate(); i <= shipByDate.getDate(); i++) {
-//     let newDate = new Date(orderDate);
-//     newDate.setDate(i);
-//     let day = newDate.getDay();
-//     daysArray.push(day);
-//   }
- 
-//   if (daysArray.includes(6) || daysArray.includes(0)) {
-//     etaModifier += 2;
-//     eta.setDate(etaModifier);
-//   }
-  
+function addDays(dateObject, n) {
+  return new Date(dateObject.setDate(dateObject.getDate() + n));
+}
 
-let order = new OrderTimes(2024, 6, 15);
+function subtractDays(dateObject, n) {
+  return new Date(dateObject.setDate(dateObject.getDate() - n));
+}
 
-console.log(order.orderDate);
+function getTotalDays(businessDays, dateObject) {
+  let totalDays = businessDays;
+  let finalDay = addDays(new Date(dateObject), businessDays);
+  console.log(`Final "Business" Day: ${finalDay}`);
+  if (doesSpanCrossWeekend(new Date(dateObject), finalDay)) {
+    totalDays += 2;
+    console.log(doesSpanCrossWeekend(new Date(dateObject), finalDay));
+  }
+  let finalFinalDay = new Date(addDays(new Date(dateObject), totalDays));
+  console.log(`Final Day accounting for weekend: ${finalFinalDay}`);
+  return totalDays;
+}
 
+const shippingOptionSelection = document.getElementById("shipping-or-pickup");
 
-// console.log(daysArray);
-// console.log(etaModifier, shipByModifier);
-// console.log(`The order was placed on ${orderDate.toDateString()}. \nThe ETA is ${eta.toDateString()}. \nThis order should be shipped by ${shipByDate.toDateString()}.`);
+shippingOptionSelection.addEventListener("change", (Event) => {
+  if (
+    shippingOptionSelection.children[0].selected ||
+    shippingOptionSelection.children[1].selected
+  ) {
+    document.getElementById("shipping-time-input-wrapper").style.display =
+      "none";
+    totalShippingDays = 0;
+    document.getElementById("shipping-time").value = "0";
+  } else {
+    document.getElementById("shipping-time-input-wrapper").style.display =
+      "flex";
+  }
+});
+
+const saveButton = document.getElementById("save-button");
+saveButton.addEventListener("click", function () {
+  if (document.getElementById("design-time").value === "yes") {
+    businessDesignDaysInput = 1;
+  } else {
+    businessDesignDaysInput = 0;
+  }
+
+  dateTimeInput = document.getElementById("datetime").value;
+  initializeOrderDate(new Date(dateTimeInput));
+
+  businessProductionDaysInput = Number(
+    document.getElementById("production-time").value
+  );
+  businessShippingDaysInput = Number(
+    document.getElementById("shipping-time").value
+  );
+
+  totalDesignDays = getTotalDays(businessDesignDaysInput, new Date(orderDate));
+  totalProductionDays = getTotalDays(
+    businessProductionDaysInput,
+    new Date(addDays(new Date(orderDate), totalDesignDays))
+  );
+  shipByModifier = totalDesignDays + totalProductionDays + bufferDays;
+  intializeShipByDate(addDays(new Date(orderDate), shipByModifier));
+  totalShippingDays = getTotalDays(
+    businessShippingDaysInput,
+    new Date(addDays(new Date(orderDate), shipByModifier))
+  );
+
+  console.log(totalDesignDays);
+  console.log(totalProductionDays);
+  console.log(totalShippingDays);
+
+  etaModifier = shipByModifier + totalShippingDays;
+
+  initializeEta(new Date(dateTimeInput));
+
+  // printDateTimeInput(dateTimeInput);
+  console.log(`OrderDate ${orderDate}`);
+  console.log(`Ship-by Date ${shipByDate}`);
+  console.log(`ETA: ${eta}`);
+  console.log("   \n    \n    ");
+});

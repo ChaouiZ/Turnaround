@@ -1,0 +1,125 @@
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #535C91;
+    background-image: linear-gradient(to right bottom, #070F2B, #1B1A55 70%); 
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.input-wrapper {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  border: none;
+  padding: 3rem;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+label {
+  color: white;
+  background-color: transparent;
+  padding: 5px;
+}
+
+.date-time-input {
+
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  font-weight:550;
+  border: none;
+  padding: .2rem;
+  border-radius: 5px;
+  margin: .2rem;
+  color: white;
+  color-scheme: white;
+  background-color: transparent;
+
+}
+
+.date-time-input::-webkit-calendar-picker-indicator {
+  filter:invert(1);
+  padding: 1px;
+  border-radius: 5px;;
+}
+
+.date-time-input-wrapper {
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+}
+
+.production-time-input-wrapper, .shipping-time-input-wrapper,
+ .design-time-input-wrapper, .shipping-or-pickup-input-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.shipping-time-input-wrapper {
+    display: none;
+}
+
+.production-time-input, .shipping-time-input, 
+.design-time-input, .shipping-or-pickup-input {
+  max-width: 20%;
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+  padding: .125rem;
+  margin-top: .5rem;
+  text-align: center;
+}
+
+.design-time-input{
+    max-width: 30%;
+}
+
+.shipping-or-pickup-input {
+    max-width: 60%;
+}
+
+option {
+    color: white;
+    background-color:#1B1A55;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+button {
+    margin-top: 1.5rem;
+}
+
+.order-date-display-wrapper {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  border: none;
+  padding: 3rem;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.order-date-display-wrapper > * {
+  color: white; 
+}

@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turnaround Calculator</title>
-</head>
-<body>
-    <input type="datetime-local">
 
-    <script type="text/javascript" src="script.js"></script>
+<head>
+   <meta charset="UTF-8">
+   <meta name="author" content="Zach Savant">
+   <link rel="stylesheet" href="styles.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Checkbox</title>
+   <link rel="icon" href="uzlogo.png">
+</head>
+<div class="input-wrapper">
+   <div class="date-time-input-wrapper">
+      <label for="datetime">Order Date</label>
+      <input class="date-time-input" type="datetime-local" id="datetime">
+   </div>
+   <div class="production-time-input-wrapper">
+      <label for="production-time">Number of Production Days</label>
+      <input class="production-time-input" type="number" id="production-time" value="0">
+   </div>
+   <div class="shipping-or-pickup-input-wrapper">
+      <label for="shipping-or-pickup">Shipping or Pickup?</label>
+      <select class="shipping-or-pickup-input" id="shipping-or-pickup">
+         <option>Select</option>
+         <option value="pickup" id="pickup">Pickup</option>
+         <option value="shipping" id="shipping">Shipping</option>
+      </select>
+   </div>
+   <div class="shipping-time-input-wrapper" id="shipping-time-input-wrapper">
+      <label for="shipping-time">Number of Shipping Days</label>
+      <input class="shipping-time-input" type="number" id="shipping-time" value="0">
+   </div>
+   <div class="design-time-input-wrapper">
+      <label for="design-time">Do you need a proof?</label>
+      <select class="design-time-input" id="design-time">
+         <option value="no" id="no">No</option>
+         <option value="yes" id="yes">Yes</option>
+      </select>
+   </div>
+   <button id="save-button">Calculate ETA</button>
+</div>
+<script src="script.js"></script>
 </body>
+<div class="display-wrapper">
+   <div class="order-date-display-wrapper">
+      <p class="order-date-display-preamble">The order was placed on:&nbsp;</p>
+      <p class="order-date-display" id="order-date-display"></p>
+   </div>
+</div>
+
 </html>
