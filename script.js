@@ -1,23 +1,3 @@
-let businessProductionDaysInput;
-let businessShippingDaysInput;
-let businessDesignDaysInput;
-let dateTimeInput;
-
-let bufferDays = 1;
-let isApproved = false;
-
-let totalDesignDays;
-let totalProductionDays;
-let totalShippingDays;
-
-let shipByModifier;
-let etaModifier;
-
-let orderDate;
-let eta;
-let shipByDate;
-let approvalDate;
-
 function doesSpanCrossWeekend(earliestDate, latestDate) {
   const daysArray = [];
 
@@ -46,7 +26,7 @@ function initializeOrderDate(date = new Date()) {
   //   return orderDate;
 }
 
-function intializeShipByDate(dateObject) {
+function initializeShipByDate(dateObject) {
   shipByDate = new Date(dateObject);
 }
 
@@ -80,7 +60,7 @@ function getTotalDays(businessDays, dateObject) {
 
 const shippingOptionSelection = document.getElementById("shipping-or-pickup");
 
-shippingOptionSelection.addEventListener("change", (Event) => {
+shippingOptionSelection.addEventListener("change", () => {
   if (
     shippingOptionSelection.children[0].selected ||
     shippingOptionSelection.children[1].selected
@@ -118,22 +98,34 @@ saveButton.addEventListener("click", function () {
     businessProductionDaysInput,
     new Date(addDays(new Date(orderDate), totalDesignDays))
   );
-  shipByModifier = totalDesignDays + totalProductionDays + bufferDays;
-  intializeShipByDate(addDays(new Date(orderDate), shipByModifier));
+  //   shipByModifier = totalDesignDays + totalProductionDays + bufferDays;
+  //   initializeShipByDate(anew Date(addDays(new Date(orderDate).getDate() + ddDays(new Date(orderDate), shipByModifier));
   totalShippingDays = getTotalDays(
     businessShippingDaysInput,
-    new Date(addDays(new Date(orderDate), shipByModifier))
+    new Date(
+      addDays(
+        new Date(orderDate),
+        totalDesignDays + totalProductionDays + bufferDays
+      )
+    )
   );
 
   console.log(totalDesignDays);
   console.log(totalProductionDays);
   console.log(totalShippingDays);
 
-  etaModifier = shipByModifier + totalShippingDays;
+  etaModifier = totalDesignDays + totalProductionDays + totalShippingDays;
 
   initializeEta(new Date(dateTimeInput));
+  initializeShipByDate(
+    new Date(
+      addDays(new Date(orderDate), totalDesignDays + totalProductionDays)
+    )
+  );
 
-  // printDateTimeInput(dateTimeInput);
+  orderDateOutput.innerHTML = orderDate.toDateString();
+
+  printDateTimeInput(dateTimeInput);
   console.log(`OrderDate ${orderDate}`);
   console.log(`Ship-by Date ${shipByDate}`);
   console.log(`ETA: ${eta}`);
