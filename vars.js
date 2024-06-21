@@ -1,7 +1,9 @@
 let businessProductionDaysInput;
 let businessShippingDaysInput;
-let businessDesignDaysInput;
 let dateTimeInput;
+let businessDesignDaysInput;
+
+let approvalBoolInput;
 
 const orderDateOutput = document.getElementById("order-date");
 // orderDateOutput.innerHTML = "Hello";

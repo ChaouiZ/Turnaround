@@ -61,7 +61,7 @@ label {
 }
 
 .production-time-input-wrapper, .shipping-time-input-wrapper,
- .design-time-input-wrapper, .shipping-or-pickup-input-wrapper {
+ .approval-bool-input-wrapper, .shipping-or-pickup-input-wrapper {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@ label {
 }
 
 .production-time-input, .shipping-time-input, 
-.design-time-input, .shipping-or-pickup-input {
+.approval-bool-input, .shipping-or-pickup-input {
   max-width: 20%;
   border: none;
   font-size: 1.125rem;
@@ -87,7 +87,7 @@ label {
   text-align: center;
 }
 
-.design-time-input{
+.approval-bool-input{
     max-width: 30%;
 }
 
