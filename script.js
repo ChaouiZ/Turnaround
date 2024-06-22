@@ -2,6 +2,7 @@ import {
   initializeEta,
   initializeOrderDate,
   initializeShipByDate,
+  getInputs,
 } from "./initialize.mjs";
 
 import {
@@ -11,8 +12,6 @@ import {
   subtractDays,
   recalculateEta,
 } from "./utils.mjs";
-
-const shippingOptionSelection = document.getElementById("shipping-or-pickup");
 
 shippingOptionSelection.addEventListener("change", () => {
   if (
@@ -29,41 +28,45 @@ shippingOptionSelection.addEventListener("change", () => {
   }
 });
 
-const saveButton = document.getElementById("save-button");
 saveButton.addEventListener("click", function () {
-  approvalBoolInput = document.getElementById("approval-bool");
+  getInputs();
 
-  if ((approvalBoolInput.value = "yes")) {
-    businessDesignDaysInput = 1;
-  } else {
-    businessDesignDaysInput = 0;
-  }
+  const ifPlacedBeforeCutoff = new Date(subtractDays(new Date(orderDate), 1));
 
-  dateTimeInput = document.getElementById("datetime").value;
-  initializeOrderDate(new Date(dateTimeInput));
-
-  businessProductionDaysInput = Number(
-    document.getElementById("production-time").value
-  );
-  businessShippingDaysInput = Number(
-    document.getElementById("shipping-time").value
-  );
-
-  totalDesignDays = getTotalDays(businessDesignDaysInput, new Date(orderDate));
-  totalProductionDays = getTotalDays(
-    businessProductionDaysInput,
-    new Date(addDays(new Date(orderDate), totalDesignDays))
-  );
-
-  totalShippingDays = getTotalDays(
-    businessShippingDaysInput,
-    new Date(
-      addDays(
-        new Date(orderDate),
-        totalDesignDays + totalProductionDays + bufferDays
+  if (orderDate.getHours() < 11) {
+    totalDesignDays = getTotalDays(
+      businessDesignDaysInput,
+      new Date(ifPlacedBeforeCutoff)
+    );
+    totalProductionDays = getTotalDays(
+      businessProductionDaysInput,
+      new Date(addDays(new Date(ifPlacedBeforeCutoff), totalDesignDays))
+    );
+    totalShippingDays = getTotalDays(
+      businessShippingDaysInput,
+      new Date(
+        addDays(
+          new Date(ifPlacedBeforeCutoff),
+          totalDesignDays + totalProductionDays
+        )
       )
-    )
-  );
+    );
+  } else {
+    totalDesignDays = getTotalDays(
+      businessDesignDaysInput,
+      new Date(orderDate)
+    );
+    totalProductionDays = getTotalDays(
+      businessProductionDaysInput,
+      new Date(addDays(new Date(orderDate), totalDesignDays))
+    );
+    totalShippingDays = getTotalDays(
+      businessShippingDaysInput,
+      new Date(
+        addDays(new Date(orderDate), totalDesignDays + totalProductionDays)
+      )
+    );
+  }
 
   console.log(totalDesignDays);
   console.log(totalProductionDays);
@@ -71,7 +74,12 @@ saveButton.addEventListener("click", function () {
 
   etaModifier = totalDesignDays + totalProductionDays + totalShippingDays;
 
-  initializeEta(new Date(dateTimeInput));
+  if (orderDate.getHours() < 11) {
+    initializeEta(new Date(ifPlacedBeforeCutoff));
+  } else {
+    initializeEta(new Date(dateTimeInput));
+  }
+
   initializeShipByDate(
     new Date(
       addDays(new Date(orderDate), totalDesignDays + totalProductionDays)
