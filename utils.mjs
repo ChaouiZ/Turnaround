@@ -1,3 +1,13 @@
+function checkIfSpanStartsSatOrSun(dateObject) {
+  if (new Date(dateObject).getDay() === 6) {
+    return 2;
+  } else if (new Date(dateObject).getDay() === 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 function doesSpanCrossWeekend(earliestDate, latestDate) {
   const daysArray = [];
 
@@ -32,13 +42,22 @@ function subtractDays(dateObject, n) {
 
 function getTotalDays(businessDays, dateObject) {
   let totalDays = businessDays;
-  let finalDay = addDays(new Date(dateObject), businessDays);
+  let weekendStartCheckedDateObject = addDays(
+    new Date(dateObject),
+    checkIfSpanStartsSatOrSun(new Date(dateObject))
+  );
+  totalDays += checkIfSpanStartsSatOrSun(new Date(dateObject));
+  let finalDay = addDays(new Date(weekendStartCheckedDateObject), businessDays);
   console.log(`Final "Business" Day: ${finalDay}`);
-  if (doesSpanCrossWeekend(new Date(dateObject), finalDay)) {
+  if (doesSpanCrossWeekend(new Date(weekendStartCheckedDateObject), finalDay)) {
     totalDays += 2;
-    console.log(doesSpanCrossWeekend(new Date(dateObject), finalDay));
+    console.log(
+      doesSpanCrossWeekend(new Date(weekendStartCheckedDateObject), finalDay)
+    );
   }
-  let finalFinalDay = new Date(addDays(new Date(dateObject), totalDays));
+  let finalFinalDay = new Date(
+    addDays(new Date(weekendStartCheckedDateObject), totalDays)
+  );
   console.log(`Final Day accounting for weekend: ${finalFinalDay}`);
   return totalDays;
 }
