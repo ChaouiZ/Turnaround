@@ -6,6 +6,7 @@ let businessDesignDaysInput;
 let approvalBoolInput;
 
 const orderDateOutput = document.getElementById("order-date");
+const etaOutput = document.getElementById("ETA-date");
 const shippingOptionSelection = document.getElementById("shipping-or-pickup");
 const saveButton = document.getElementById("save-button");
 

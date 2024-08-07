@@ -87,6 +87,7 @@ saveButton.addEventListener("click", function () {
   );
 
   orderDateOutput.innerHTML = orderDate.toDateString();
+  etaOutput.innerHTML = eta.toDateString();
 
   console.log(`OrderDate ${orderDate}`);
   console.log(`Ship-by Date ${shipByDate}`);
