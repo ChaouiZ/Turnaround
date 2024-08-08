@@ -2,6 +2,7 @@ let businessProductionDaysInput;
 let businessShippingDaysInput;
 let dateTimeInput;
 let businessDesignDaysInput;
+let approvalDateInput;
 
 let approvalBoolInput;
 
