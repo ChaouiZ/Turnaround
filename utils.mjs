@@ -33,11 +33,15 @@ function doesSpanCrossWeekend(earliestDate, latestDate) {
 function recalculateEta(approvalDateObject, n) {}
 
 function addDays(dateObject, n) {
-  return new Date(dateObject.setDate(dateObject.getDate() + n));
+  const result = new Date(dateObject);
+  result.setDate(dateObject.getDate() + n);
+  return result;
 }
 
 function subtractDays(dateObject, n) {
-  return new Date(dateObject.setDate(dateObject.getDate() - n));
+  const result = new Date(dateObject);
+  result.setDate(dateObject.getDate() - n);
+  return result;
 }
 
 function getTotalDays(businessDays, dateObject) {
