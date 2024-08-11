@@ -8,23 +8,30 @@ function checkIfSpanStartsSatOrSun(dateObject) {
   }
 }
 
-function doesSpanCrossWeekend(earliestDate, latestDate) {
-  const daysArray = [];
+function doesSpanCrossWeekend(dateObject, n) {
+  const finalDay = addDays(dateObject, n);
 
-  for (let i = earliestDate.getDate() + 1; i <= latestDate.getDate(); i++) {
-    let newDate = new Date(earliestDate);
-    newDate.setDate(i);
-    let day = newDate.getDay();
-    daysArray.push(day);
-  }
-
-  console.log(daysArray);
-
-  if (daysArray.includes(6) || daysArray.includes(0)) {
-    return true;
-  }
-  return false;
+  const differenceInEpTime =
+    new Date(finalDay).getTime() - new Date(dateObject).getTime();
+  const differenceInDays = differenceInEpTime / (1000 * 3600 * 24);
 }
+// function doesSpanCrossWeekend(earliestDate, latestDate) {
+//   const daysArray = [];
+
+//   for (let i = earliestDate.getDate() + 1; i <= latestDate.getDate(); i++) {
+//     let newDate = new Date(earliestDate);
+//     newDate.setDate(i);
+//     let day = newDate.getDay();
+//     daysArray.push(day);
+//   }
+
+//   console.log(daysArray);
+
+//   if (daysArray.includes(6) || daysArray.includes(0)) {
+//     return true;
+//   }
+//   return false;
+// }
 
 // function printDateTimeInput(n) {
 //   console.log(n);
