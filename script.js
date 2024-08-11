@@ -20,13 +20,9 @@ function addDays(dateObject, n) {
 function doesSpanCrossWeekend(dateObject, n) {
   const finalDay = addDays(dateObject, n);
 
-  const differenceInEpTime =
-    new Date(finalDay).getTime() - new Date(dateObject).getTime();
-  const differenceInDays = differenceInEpTime / (1000 * 3600 * 24);
-
   return (
     new Date(finalDay).getDay() - new Date(dateObject).getDay() < 0 ||
-    differenceInDays > 4 ||
+    n > 4 ||
     finalDay.getDay() === 6 ||
     finalDay.getDay() === 0
   );
