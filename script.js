@@ -1,5 +1,5 @@
 const orderDateInput = document.querySelector("#order-date-input");
-let orderDateHolder = { value: undefined };
+let orderDateHolder = { value: new Date() };
 
 const productionDaysInput = document.querySelector(".production-time-input");
 let productionDaysHolder = { value: 0 };
@@ -9,17 +9,11 @@ const shippingOptionSelection = document.querySelector("#shipping-or-pickup");
 const shippingDaysInput = document.querySelector(".shipping-time-input");
 let shippingDaysHolder = { value: 0 };
 
-let eta;
+let eta = { value: new Date() };
 
 function addDays(dateObject, n) {
   const result = new Date(dateObject);
   result.setDate(dateObject.getDate() + n);
-  return result;
-}
-
-function subtractDays(dateObject, n) {
-  const result = new Date(dateObject);
-  result.setDate(dateObject.getDate() - n);
   return result;
 }
 
@@ -29,9 +23,9 @@ function calculateEta() {
   let orderDate = new Date(orderDateHolder.value);
   let etaModifier = productionDays + shippingDays;
 
-  eta = addDays(orderDate, etaModifier);
+  eta.value = addDays(orderDate, etaModifier);
 
-  console.log(eta);
+  console.log(`ETA: ${eta.value}`);
 }
 
 function print() {
