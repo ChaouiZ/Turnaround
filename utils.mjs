@@ -14,6 +14,13 @@ function doesSpanCrossWeekend(dateObject, n) {
   const differenceInEpTime =
     new Date(finalDay).getTime() - new Date(dateObject).getTime();
   const differenceInDays = differenceInEpTime / (1000 * 3600 * 24);
+
+  return (
+    differenceInDays < 0 ||
+    differenceInDays > 4 ||
+    finalDay.getDay() === 5 ||
+    finalDay.getDay() === 6
+  );
 }
 // function doesSpanCrossWeekend(earliestDate, latestDate) {
 //   const daysArray = [];

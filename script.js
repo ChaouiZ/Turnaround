@@ -17,10 +17,26 @@ function addDays(dateObject, n) {
   return result;
 }
 
+function doesSpanCrossWeekend(dateObject, n) {
+  const finalDay = addDays(dateObject, n);
+
+  const differenceInEpTime =
+    new Date(finalDay).getTime() - new Date(dateObject).getTime();
+  const differenceInDays = differenceInEpTime / (1000 * 3600 * 24);
+
+  return (
+    new Date(finalDay).getDay() - new Date(dateObject).getDay() < 0 ||
+    differenceInDays > 4 ||
+    finalDay.getDay() === 6 ||
+    finalDay.getDay() === 0
+  );
+}
+
 function calculateEta() {
   let productionDays = Number(productionDaysHolder.value);
   let shippingDays = Number(shippingDaysHolder.value);
   let orderDate = new Date(orderDateHolder.value);
+  console.log(doesSpanCrossWeekend(orderDate, productionDays));
   let etaModifier = productionDays + shippingDays;
 
   eta.value = addDays(orderDate, etaModifier);
