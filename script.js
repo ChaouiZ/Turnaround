@@ -7,6 +7,7 @@ const productionDaysInput = document.querySelector(".production-time-input");
 const productionDaysHolder = { value: 0 };
 
 const shippingOptionSelection = document.querySelector("#shipping-or-pickup");
+const approvalCheckInput = document.querySelector(".approval-bool-input");
 
 const shippingDaysInput = document.querySelector(".shipping-time-input");
 const shippingDaysHolder = { value: 0 };
@@ -98,6 +99,17 @@ shippingOptionSelection.addEventListener("change", () => {
     document.getElementById("shipping-time").value = "0";
   } else {
     document.getElementById("shipping-time-input-wrapper").style.display =
+      "flex";
+  }
+});
+
+approvalCheckInput.addEventListener("change", () => {
+  if (approvalCheckInput.value === "no") {
+    document.querySelector(".approval-date-input-wrapper").style.display =
+      "none";
+    approvalDateHolder.value = orderDateHolder.value;
+  } else {
+    document.querySelector(".approval-date-input-wrapper").style.display =
       "flex";
   }
 });
