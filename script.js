@@ -70,14 +70,14 @@ function calculateEta() {
   console.log(`ETA: ${eta.value}`);
 }
 
-function print() {
-  console.log(orderDateHolder.value);
+function print(value) {
+  console.log(value);
 }
 
 function assignEventListener(input, valueHolder) {
   input.addEventListener("change", () => {
     valueHolder.value = input.value;
-    print();
+    print(valueHolder.value);
     calculateEta();
   });
 }
@@ -85,6 +85,7 @@ function assignEventListener(input, valueHolder) {
 assignEventListener(orderDateInput, orderDateHolder);
 assignEventListener(productionDaysInput, productionDaysHolder);
 assignEventListener(shippingDaysInput, shippingDaysHolder);
+assignEventListener(approvalDateInput, approvalDateHolder);
 
 shippingOptionSelection.addEventListener("change", () => {
   if (
