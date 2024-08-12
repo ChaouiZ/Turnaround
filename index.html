@@ -1,63 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Zach Savant" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox</title>
+    <link rel="icon" href="uzlogo.png" />
+  </head>
+  <body>
+    <div class="input-wrapper">
+      <div class="date-time-input-wrapper">
+        <label for="order-date">Order Date</label>
+        <input
+          class="date-time-input"
+          type="datetime-local"
+          id="order-date-input"
+        />
+      </div>
+      <div class="production-time-input-wrapper">
+        <label for="production-time">Number of Production Days</label>
+        <input
+          class="production-time-input"
+          type="number"
+          id="production-time"
+          value="0"
+          min="0"
+        />
+      </div>
+      <div class="shipping-or-pickup-input-wrapper">
+        <label for="shipping-or-pickup">Shipping or Pickup?</label>
+        <select class="shipping-or-pickup-input" id="shipping-or-pickup">
+          <option>Select</option>
+          <option value="pickup" id="pickup">Pickup</option>
+          <option value="shipping" id="shipping">Shipping</option>
+        </select>
+      </div>
+      <div class="shipping-time-input-wrapper" id="shipping-time-input-wrapper">
+        <label for="shipping-time">Number of Shipping Days</label>
+        <input
+          class="shipping-time-input"
+          type="number"
+          id="shipping-time"
+          value="0"
+          min="0"
+        />
+      </div>
+      <div class="approval-bool-input-wrapper">
+        <label for="approval-bool">Do you need a proof?</label>
+        <select class="approval-bool-input" id="approval-bool">
+          <option value="no" id="no">No</option>
+          <option value="yes" id="yes">Yes</option>
+        </select>
+      </div>
+      <div class="approval-date-input-wrapper">
+        <label for="approval-date-input">Approval Date</label>
+        <input
+          type="datetime-local"
+          class="date-time-input"
+          id="approval-date-input"
+        />
+      </div>
+      <button id="save-button">Calculate ETA</button>
+    </div>
+    <div class="display-wrapper">
+      <div class="order-date-display-wrapper date-display-wrapper">
+        <p class="order-date-display-preamble">
+          The order was placed on:&nbsp;
+        </p>
+        <p class="order-date-display date-display" id="order-date"></p>
+      </div>
+      <div class="ETA-display-wrapper date-display-wrapper">
+        <p class="ETA-display-preamble">Your ETA is:&nbsp;</p>
+        <p class="ETA-display date-display" id="ETA-date"></p>
+      </div>
+    </div>
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="author" content="Zach Savant">
-   <link rel="stylesheet" href="styles.css">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Checkbox</title>
-   <link rel="icon" href="uzlogo.png">
-</head>
-<div class="input-wrapper">
-   <div class="date-time-input-wrapper">
-      <label for="order-date">Order Date</label>
-      <input class="date-time-input" type="datetime-local" id="order-date-input">
-   </div>
-   <div class="production-time-input-wrapper">
-      <label for="production-time">Number of Production Days</label>
-      <input class="production-time-input" type="number" id="production-time" value="0" min="0">
-   </div>
-   <div class="shipping-or-pickup-input-wrapper">
-      <label for="shipping-or-pickup">Shipping or Pickup?</label>
-      <select class="shipping-or-pickup-input" id="shipping-or-pickup">
-         <option>Select</option>
-         <option value="pickup" id="pickup">Pickup</option>
-         <option value="shipping" id="shipping">Shipping</option>
-      </select>
-   </div>
-   <div class="shipping-time-input-wrapper" id="shipping-time-input-wrapper">
-      <label for="shipping-time">Number of Shipping Days</label>
-      <input class="shipping-time-input" type="number" id="shipping-time" value="0" min="0">
-   </div>
-   <div class="approval-bool-input-wrapper">
-      <label for="approval-bool">Do you need a proof?</label>
-      <select class="approval-bool-input" id="approval-bool">
-         <option value="no" id="no">No</option>
-         <option value="yes" id="yes">Yes</option>
-      </select>
-   </div>
-   <button id="save-button">Calculate ETA</button>
-</div>
-<div class="input-wrapper">
-   <label for="approval-date-input">Approval Date</label>
-   <input type="datetime-local" class="date-time-input" id="approval-date-input">
-
-</div>
-<div class="display-wrapper">
-   <div class="order-date-display-wrapper date-display-wrapper">
-      <p class="order-date-display-preamble">The order was placed on:&nbsp;</p>
-      <p class="order-date-display date-display" id="order-date"></p>
-   </div>
-   <div class="ETA-display-wrapper date-display-wrapper">
-      <p class="ETA-display-preamble">Your ETA is:&nbsp;</p>
-      <p class="ETA-display date-display" id="ETA-date"></p>
-   </div>
-</div>
-
-
-<!-- <script src="vars.js" type="text/javascript"></script> -->
-<script type="module" src="script.js"></script>
-</body>
-
+    <!-- <script src="vars.js" type="text/javascript"></script> -->
+    <script type="module" src="script.js"></script>
+  </body>
 </html>
