@@ -57,6 +57,11 @@ function calculateEta() {
   let productionDays = Number(productionDaysHolder.value);
   let shippingDays = Number(shippingDaysHolder.value);
   let orderDate = new Date(orderDateHolder.value);
+  let approvalDate = new Date(approvalDateHolder.value);
+  if (approvalCheckInput.value === "no") {
+    approvalDate = new Date(orderDate);
+  }
+  console.log(`App: ${approvalDate}`);
 
   let totalProductionDays = getTotalDays(orderDate, productionDays);
   shipByDate.value = new Date(addDays(orderDate, totalProductionDays));
@@ -108,8 +113,10 @@ approvalCheckInput.addEventListener("change", () => {
     document.querySelector(".approval-date-input-wrapper").style.display =
       "none";
     approvalDateHolder.value = orderDateHolder.value;
+    approvalDateInput.value = orderDateHolder.value;
   } else {
     document.querySelector(".approval-date-input-wrapper").style.display =
       "flex";
   }
+  calculateEta();
 });
