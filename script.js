@@ -14,7 +14,8 @@ const shippingDaysHolder = { value: 0 };
 const approvalDateInput = document.querySelector("#approval-date-input");
 const approvalDateHolder = { value: new Date() };
 
-let eta = { value: new Date() };
+const eta = { value: new Date() };
+const shipByDate = { value: new Date() };
 
 function addDays(dateObject, n) {
   const result = new Date(dateObject);
@@ -41,13 +42,31 @@ function getTotalDays(dateObject, daySpan) {
   return totalDays;
 }
 
+function checkIfBeforeCutoff(dateObject) {
+  return new Date(dateObject).getHours() < 11;
+}
+
+function checkIfOnWeekend(dateObject) {
+  return (
+    new Date(dateObject).getDay() === 6 || new Date(dateObject).getDay() === 0
+  );
+}
+
 function calculateEta() {
   let productionDays = Number(productionDaysHolder.value);
   let shippingDays = Number(shippingDaysHolder.value);
   let orderDate = new Date(orderDateHolder.value);
-  let totalProductionDays = getTotalDays(orderDate, productionDays);
 
+  let totalProductionDays = getTotalDays(orderDate, productionDays);
+  shipByDate.value = addDays(
+    new Date(addDays(orderDate, totalProductionDays)),
+    1
+  );
   let etaModifier = totalProductionDays + shippingDays;
+
+  console.log(`Ship By ${shipByDate.value}`);
+  console.log(`wknd ${checkIfOnWeekend(orderDate)}`);
+  console.log(checkIfBeforeCutoff(orderDate));
 
   eta.value = addDays(orderDate, etaModifier);
 
