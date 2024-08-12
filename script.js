@@ -58,10 +58,7 @@ function calculateEta() {
   let orderDate = new Date(orderDateHolder.value);
 
   let totalProductionDays = getTotalDays(orderDate, productionDays);
-  shipByDate.value = addDays(
-    new Date(addDays(orderDate, totalProductionDays)),
-    1
-  );
+  shipByDate.value = new Date(addDays(orderDate, totalProductionDays));
   let etaModifier = totalProductionDays + shippingDays;
 
   console.log(`Ship By ${shipByDate.value}`);
