@@ -74,14 +74,18 @@ function calculateEta() {
   }
   console.log(`App: ${approvalDate}`);
 
+  if (approvalCheckInput.value === "yes") {
+    productionDays += 1;
+  }
+
+  if (checkIfBeforeCutoff(approvalDate)) {
+    productionDays -= 1;
+  }
+
   let totalProductionDays = getTotalDays(approvalDate, productionDays);
   shipByDate.value = new Date(addDays(approvalDate, totalProductionDays));
   let totalShippingDays = getTotalDays(shipByDate.value, shippingDays);
   let etaModifier = totalProductionDays + totalShippingDays;
-
-  if (approvalCheckInput.value === "yes") {
-    etaModifier += 1;
-  }
 
   console.log(`Ship By ${shipByDate.value}`);
   console.log(`wknd ${checkIfOnWeekend(orderDate)}`);
