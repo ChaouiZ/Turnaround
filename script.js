@@ -53,6 +53,17 @@ function checkIfOnWeekend(dateObject) {
   );
 }
 
+function displayDates() {
+  const shipByDateDisplay = document.querySelector(".shipby-date-display");
+  const etaDate = document.querySelector(".ETA-display");
+
+  if (approvalCheckInput.value === "no") {
+    shipByDateDisplay.innerHTML = "N/A";
+  }
+  shipByDateDisplay.innerHTML = shipByDate.value.toDateString();
+  etaDate.innerHTML = eta.value.toDateString();
+}
+
 function calculateEta() {
   let productionDays = Number(productionDaysHolder.value);
   let shippingDays = Number(shippingDaysHolder.value);
@@ -63,17 +74,23 @@ function calculateEta() {
   }
   console.log(`App: ${approvalDate}`);
 
-  let totalProductionDays = getTotalDays(orderDate, productionDays);
-  shipByDate.value = new Date(addDays(orderDate, totalProductionDays));
-  let etaModifier = totalProductionDays + shippingDays;
+  let totalProductionDays = getTotalDays(approvalDate, productionDays);
+  shipByDate.value = new Date(addDays(approvalDate, totalProductionDays));
+  let totalShippingDays = getTotalDays(shipByDate.value, shippingDays);
+  let etaModifier = totalProductionDays + totalShippingDays;
+
+  if (approvalCheckInput.value === "yes") {
+    etaModifier += 1;
+  }
 
   console.log(`Ship By ${shipByDate.value}`);
   console.log(`wknd ${checkIfOnWeekend(orderDate)}`);
-  console.log(checkIfBeforeCutoff(orderDate));
+  console.log(`cutoff? ${checkIfBeforeCutoff(orderDate)}`);
 
-  eta.value = addDays(orderDate, etaModifier);
+  eta.value = addDays(approvalDate, etaModifier);
 
   console.log(`ETA: ${eta.value}`);
+  displayDates();
 }
 
 function print(value) {
