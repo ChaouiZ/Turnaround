@@ -53,6 +53,22 @@ function checkIfOnWeekend(dateObject) {
   );
 }
 
+function moveToMondayMorning(dateObject) {
+  let tempDate = new Date(dateObject);
+  const dayOfWeek = tempDate.getDay();
+
+  if (dayOfWeek === 6) {
+    tempDate = addDays(new Date(tempDate), 2);
+    tempDate.setHours(8, 0, 0);
+    console.log(`temp ${tempDate}`);
+  } else if (dayOfWeek === 0) {
+    addDays(tempDate, 1);
+    tempDate.setHours(8, 0, 0);
+  }
+
+  return new Date(tempDate);
+}
+
 function displayDates() {
   const shipByDateDisplay = document.querySelector(".shipby-date-display");
   const etaDate = document.querySelector(".ETA-display");
@@ -76,6 +92,10 @@ function calculateEta() {
 
   if (approvalCheckInput.value === "yes") {
     productionDays += 1;
+  }
+
+  if (checkIfOnWeekend(approvalDate)) {
+    approvalDate = moveToMondayMorning(approvalDate);
   }
 
   if (checkIfBeforeCutoff(approvalDate)) {
