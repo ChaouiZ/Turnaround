@@ -48,6 +48,7 @@ function checkIfBeforeCutoff(dateObject) {
 }
 
 function checkIfOnWeekend(dateObject) {
+  console.log(`appinwkndchckfnc ${new Date(dateObject)}`);
   return (
     new Date(dateObject).getDay() === 6 || new Date(dateObject).getDay() === 0
   );
@@ -60,12 +61,12 @@ function moveToMondayMorning(dateObject) {
   if (dayOfWeek === 6) {
     tempDate = addDays(new Date(tempDate), 2);
     tempDate.setHours(8, 0, 0);
-    console.log(`temp ${tempDate}`);
   } else if (dayOfWeek === 0) {
-    addDays(tempDate, 1);
+    tempDate = addDays(new Date(tempDate), 1);
     tempDate.setHours(8, 0, 0);
   }
 
+  console.log(`temp ${tempDate}`);
   return new Date(tempDate);
 }
 
@@ -85,10 +86,10 @@ function calculateEta() {
   let shippingDays = Number(shippingDaysHolder.value);
   let orderDate = new Date(orderDateHolder.value);
   let approvalDate = new Date(approvalDateHolder.value);
+
   if (approvalCheckInput.value === "no") {
     approvalDate = new Date(orderDate);
   }
-  console.log(`App: ${approvalDate}`);
 
   if (approvalCheckInput.value === "yes") {
     productionDays += 1;
@@ -97,10 +98,12 @@ function calculateEta() {
   if (checkIfOnWeekend(approvalDate)) {
     approvalDate = moveToMondayMorning(approvalDate);
   }
-
-  if (checkIfBeforeCutoff(approvalDate)) {
+  console.log(`appafterwkndchck ${approvalDate}`);
+  if (checkIfBeforeCutoff(approvalDate) && productionDays > 0) {
     productionDays -= 1;
   }
+  console.log(`proddays ${productionDays}`);
+  console.log(`App: ${approvalDate}`);
 
   let totalProductionDays = getTotalDays(approvalDate, productionDays);
   shipByDate.value = new Date(addDays(approvalDate, totalProductionDays));
@@ -108,8 +111,7 @@ function calculateEta() {
   let etaModifier = totalProductionDays + totalShippingDays;
 
   console.log(`Ship By ${shipByDate.value}`);
-  console.log(`wknd ${checkIfOnWeekend(orderDate)}`);
-  console.log(`cutoff? ${checkIfBeforeCutoff(orderDate)}`);
+  // s
 
   eta.value = addDays(approvalDate, etaModifier);
 
