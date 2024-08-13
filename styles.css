@@ -1,5 +1,6 @@
 :root {
   font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
 }
 
 html {
@@ -147,4 +148,11 @@ button {
   align-items: center;
   justify-content: center;
   padding-top: 1rem;
+}
+
+.wrapper-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50%;
 }
